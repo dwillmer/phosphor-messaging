@@ -1,0 +1,7 @@
+*.suo
+*.user
+.DS_Store
+docs
+lib
+node_modules
+test/*.js

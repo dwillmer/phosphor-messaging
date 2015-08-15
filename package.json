@@ -1,0 +1,42 @@
+{
+  "name": "phosphor-messaging",
+  "version": "0.9.0",
+  "description": "A module for inter-object message passing.",
+  "main": "lib/index.js",
+  "typescript": {
+    "definition": "lib/phosphor-messaging.d.ts"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "dts-bundle": "^0.3.0",
+    "expect.js": "^0.3.1",
+    "mocha": "^2.2.5",
+    "rimraf": "^2.4.2",
+    "typedoc": "^0.3.8",
+    "typescript": "^1.5.3"
+  },
+  "scripts": {
+    "clean": "rimraf docs && rimraf lib && rimraf test/*.js",
+    "build:src": "tsc --project src",
+    "build:dts": "node scripts/dtsbundle.js",
+    "build:test": "tsc --project test",
+    "build": "npm run build:src && npm run build:dts && npm run build:test",
+    "docs": "rimraf docs && typedoc --module commonjs --target ES5 --excludeNotExported --mode file --out docs src/index.ts",
+    "prepublish": "npm run build",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phosphorjs/phosphor-messaging.git"
+  },
+  "keywords": [
+    "message",
+    "messaging",
+  ],
+  "author": "S. Chris Colbert <sccolbert@gmail.com>",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/phosphorjs/phosphor-messaging/issues"
+  },
+  "homepage": "https://github.com/phosphorjs/phosphor-messaging"
+}
