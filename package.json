@@ -6,7 +6,9 @@
   "typescript": {
     "definition": "lib/phosphor-messaging.d.ts"
   },
-  "dependencies": {},
+  "dependencies": {
+    "phosphor-queue": "^0.9.1"
+  },
   "devDependencies": {
     "dts-bundle": "^0.3.0",
     "expect.js": "^0.3.1",
@@ -31,7 +33,7 @@
   },
   "keywords": [
     "message",
-    "messaging",
+    "messaging"
   ],
   "author": "S. Chris Colbert <sccolbert@gmail.com>",
   "license": "BSD-3-Clause",
