@@ -7,10 +7,10 @@
     "definition": "lib/phosphor-messaging.d.ts"
   },
   "dependencies": {
-    "phosphor-queue": "^0.9.4"
+    "phosphor-queue": "^0.9.5"
   },
   "devDependencies": {
-    "dts-bundle": "^0.3.0",
+    "dts-generator": "^1.5.0",
     "expect.js": "^0.3.1",
     "mocha": "^2.2.5",
     "rimraf": "^2.4.2",
