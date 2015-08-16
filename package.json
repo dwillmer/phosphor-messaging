@@ -20,7 +20,7 @@
   "scripts": {
     "clean": "rimraf docs && rimraf lib && rimraf test/*.js",
     "build:src": "tsc --project src",
-    "build:dts": "node scripts/dtsgenerate.js",
+    "build:dts": "node scripts/dtsbundle.js",
     "build:test": "tsc --project test",
     "build": "npm run build:src && npm run build:dts && npm run build:test",
     "docs": "rimraf docs && typedoc --module commonjs --target ES5 --excludeNotExported --mode file --out docs src/index.ts",
