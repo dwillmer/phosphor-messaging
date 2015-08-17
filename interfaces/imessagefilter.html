@@ -3,18 +3,18 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>phosphor-messaging</title>
+	<title>IMessageFilter | phosphor-messaging</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="assets/css/main.css">
-	<script src="assets/js/modernizr.js"></script>
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<script src="../assets/js/modernizr.js"></script>
 </head>
 <body>
 <header>
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -23,7 +23,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">phosphor-messaging</a>
+					<a href="../index.html" class="title">phosphor-messaging</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -54,102 +54,142 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="globals.html">Globals</a>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="imessagefilter.html">IMessageFilter</a>
 				</li>
 			</ul>
-			<h1> phosphor-messaging</h1>
+			<h1>Interface IMessageFilter</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<h1 id="phosphor-messaging">phosphor-messaging</h1>
-				<p>A module for inter-object message passing.</p>
-				<p><a href="http://phosphorjs.github.io/phosphor-messaging/">API Docs</a></p>
-				<h2 id="package-install">Package Install</h2>
-				<p><strong>Prerequisites</strong></p>
-				<ul>
-					<li><a href="http://nodejs.org/">node</a></li>
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>An object which filters messages dispatched to a message handler.</p>
+					</div>
+					<h4 id="notes">Notes</h4>
+					<p>User objects should implement this interface in order to be used
+					as a message filter for a message handler.</p>
+					<p><strong>See Also</strong> <a href="../globals.html#installmessagefilter">installMessageFilter</a>.</p>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">IMessageFilter</span>
+					</li>
 				</ul>
-				<pre><code class="lang-bash">npm install --save phosphor-messaging
-</code></pre>
-				<h2 id="source-build">Source Build</h2>
-				<p><strong>Prerequisites</strong></p>
-				<ul>
-					<li><a href="http://git-scm.com/">git</a></li>
-					<li><a href="http://nodejs.org/">node</a></li>
-				</ul>
-				<pre><code class="lang-bash">git <span class="hljs-built_in">clone</span> https://github.com/phosphorjs/phosphor-messaging.git
-<span class="hljs-built_in">cd</span> phosphor-messaging
-npm install
-</code></pre>
-				<p><strong>Rebuild</strong></p>
-				<pre><code class="lang-bash">npm run clean
-npm run build
-</code></pre>
-				<h2 id="run-tests">Run Tests</h2>
-				<p>Follow the source build instructions first.</p>
-				<pre><code class="lang-bash">npm <span class="hljs-built_in">test</span>
-</code></pre>
-				<h2 id="build-docs">Build Docs</h2>
-				<p>Follow the source build instructions first.</p>
-				<pre><code class="lang-bash">npm run docs
-</code></pre>
-				<p>Navigate to <code>docs/index.html</code>.</p>
-				<h2 id="supported-runtimes">Supported Runtimes</h2>
-				<p>The runtime versions which are currently <em>known to work</em> are listed below.
-				Earlier versions may also work, but come with no guarantees.</p>
-				<ul>
-					<li>Node 0.12.7+</li>
-					<li>IE 11+</li>
-					<li>Firefox 32+</li>
-					<li>Chrome 38+</li>
-				</ul>
-				<h2 id="usage-examples">Usage Examples</h2>
-				<p>TODO</p>
-			</div>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="imessagefilter.html#filtermessage" class="tsd-kind-icon">filter<wbr>Message</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="filtermessage" class="tsd-anchor"></a>
+					<h3>filter<wbr>Message</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">filter<wbr>Message<span class="tsd-signature-symbol">(</span>handler<span class="tsd-signature-symbol">: </span><a href="imessagehandler.html" class="tsd-signature-type">IMessageHandler</a>, msg<span class="tsd-signature-symbol">: </span><a href="../classes/message.html" class="tsd-signature-type">Message</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/phosphorjs/phosphor-messaging/blob/HEAD/src/index.ts#L105">index.ts:105</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Filter a message sent to a message handler.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>handler: <a href="imessagehandler.html" class="tsd-signature-type">IMessageHandler</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The target handler of the message.</p>
+									</div>
+								</li>
+								<li>
+									<h5>msg: <a href="../classes/message.html" class="tsd-signature-type">Message</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The message dispatched to the handler.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<p><code>true</code> if the message should be filtered, of <code>false</code>
+							if the message should be dispatched to the handler as normal.</p>
+						</li>
+					</ul>
+				</section>
+			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
 					<li class="globals  ">
-						<a href="globals.html"><em>Globals</em></a>
+						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-class">
-						<a href="classes/message.html" class="tsd-kind-icon">Message</a>
+						<a href="../classes/message.html" class="tsd-kind-icon">Message</a>
 					</li>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface">
+						<a href="imessagefilter.html" class="tsd-kind-icon">IMessage<wbr>Filter</a>
+						<ul>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="imessagefilter.html#filtermessage" class="tsd-kind-icon">filter<wbr>Message</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/imessagefilter.html" class="tsd-kind-icon">IMessage<wbr>Filter</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/imessagehandler.html" class="tsd-kind-icon">IMessage<wbr>Handler</a>
+						<a href="imessagehandler.html" class="tsd-kind-icon">IMessage<wbr>Handler</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#clearmessagedata" class="tsd-kind-icon">clear<wbr>Message<wbr>Data</a>
+						<a href="../globals.html#clearmessagedata" class="tsd-kind-icon">clear<wbr>Message<wbr>Data</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#haspendingmessages" class="tsd-kind-icon">has<wbr>Pending<wbr>Messages</a>
+						<a href="../globals.html#haspendingmessages" class="tsd-kind-icon">has<wbr>Pending<wbr>Messages</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#installmessagefilter" class="tsd-kind-icon">install<wbr>Message<wbr>Filter</a>
+						<a href="../globals.html#installmessagefilter" class="tsd-kind-icon">install<wbr>Message<wbr>Filter</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#postmessage" class="tsd-kind-icon">post<wbr>Message</a>
+						<a href="../globals.html#postmessage" class="tsd-kind-icon">post<wbr>Message</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#removemessagefilter" class="tsd-kind-icon">remove<wbr>Message<wbr>Filter</a>
+						<a href="../globals.html#removemessagefilter" class="tsd-kind-icon">remove<wbr>Message<wbr>Filter</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#sendmessage" class="tsd-kind-icon">send<wbr>Message</a>
+						<a href="../globals.html#sendmessage" class="tsd-kind-icon">send<wbr>Message</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#sendpendingmessage" class="tsd-kind-icon">send<wbr>Pending<wbr>Message</a>
+						<a href="../globals.html#sendpendingmessage" class="tsd-kind-icon">send<wbr>Pending<wbr>Message</a>
 					</li>
 				</ul>
 			</nav>
@@ -219,7 +259,7 @@ npm run build
 	<p>Generated using <a href="http://typedoc.io" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
-<script src="assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>
