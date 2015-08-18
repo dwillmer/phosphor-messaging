@@ -110,11 +110,11 @@ npm run build
 				<h2 id="usage-examples">Usage Examples</h2>
 				<p><strong>Note:</strong> This module is fully compatible with Node/Babel/ES6/ES5. Simply
 				omit the type declarations when using a language other than TypeScript.</p>
-				<p><strong>The simplest case is sending a message to a message handler:</strong></p>
+				<p><strong>Send a message to a message handler for immediate processing:</strong></p>
 				<p>The <code>sendMessage</code> function delivers the messages synchronously, for
 				immediate processing by the message handler.</p>
-				<pre><code class="lang-typescript"><span class="hljs-comment">// Omit the `IMessageHandler` import on Node/Babel/ES6/ES5</span>
-<span class="hljs-keyword">import</span> { IMessageHandler, Message, sendMessage } from <span class="hljs-string">'phosphor-messaging'</span>;
+				<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> { IMessageHandler, Message, sendMessage } from <span class="hljs-string">'phosphor-messaging'</span>;
+
 
 <span class="hljs-keyword">class</span> Handler <span class="hljs-keyword">implements</span> IMessageHandler {
 
@@ -128,10 +128,11 @@ sendMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="
 sendMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'two'</span>));     <span class="hljs-comment">// logs 'two'</span>
 sendMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'three'</span>));  <span class="hljs-comment">// logs 'three'</span>
 </code></pre>
-				<p><strong>It&#39;s also possible to post a message for future processing:</strong></p>
+				<p><strong>Post a message to a message handler for future processing:</strong></p>
 				<p>The <code>postMessage</code> function delivers the messages asynchronously, for
 				processing by the message handler on the next cycle of the event loop.</p>
 				<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> { postMessage } from <span class="hljs-string">'phosphor-messaging'</span>;
+
 
 postMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'one'</span>));
 postMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'two'</span>));
@@ -139,7 +140,7 @@ postMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="
 
 <span class="hljs-comment">// sometime later: logs 'one', 'two', then 'three'.</span>
 </code></pre>
-				<p><strong>Custom messages can be defined with extra data:</strong></p>
+				<p><strong>Create custom messages which hold extra data:</strong></p>
 				<pre><code class="lang-typescript"><span class="hljs-keyword">class</span> ValueMessage extends Message {
 
   <span class="hljs-constructor"><span class="hljs-keyword">constructor</span>(value: number) </span>{
@@ -175,7 +176,7 @@ postMessage(handler, <span class="hljs-keyword">new</span> ValueMessage(<span cl
 
 <span class="hljs-comment">// sometime later: logs 'two' then 43</span>
 </code></pre>
-				<p><strong>Posted messages can be compressed to reduce duplicate work:</strong></p>
+				<p><strong>Compress posted messages to reduce duplicate work:</strong></p>
 				<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> { Queue } from <span class="hljs-string">'phosphor-queue'</span>;
 
 
@@ -209,8 +210,9 @@ postMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="
 
 <span class="hljs-comment">// sometime later: logs 'one', 'do something expensive', 'two', then 'three'</span>
 </code></pre>
-				<p><strong>It&#39;s possible to test for and preemptively deliver posted messages:</strong></p>
+				<p><strong>Test for, and preemptively deliver, posted messages:</strong></p>
 				<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> { hasPendingMessages, sendPendingMessage } from <span class="hljs-string">'phosphor-messaging'</span>;
+
 
 postMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'one'</span>));
 postMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'two'</span>));
@@ -222,6 +224,62 @@ sendPendingMessage(handler);  <span class="hljs-comment">// logs 'one'</span>
 sendPendingMessage(handler);  <span class="hljs-comment">// logs 'two'</span>
 
 <span class="hljs-comment">// sometime later: logs 'three'.</span>
+</code></pre>
+				<p><strong>Install message filters to spy on or restrict message processing:</strong></p>
+				<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> {
+  IMessageFilter, installMessageFilter, removeMessageFilter
+} from <span class="hljs-string">'phosphor-messaging'</span>;
+
+
+<span class="hljs-keyword">class</span> MessageSpy <span class="hljs-keyword">implements</span> IMessageFilter {
+
+  filterMessage(handler: IMessageHandler, msg: Message): <span class="hljs-built_in">boolean</span> {
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'spy:'</span>, msg.type);
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+  }
+}
+
+
+<span class="hljs-keyword">class</span> FilterTwo <span class="hljs-keyword">implements</span> IMessageFilter {
+
+  filterMessage(handler: IMessageHandler, msg: Message): <span class="hljs-built_in">boolean</span> {
+      <span class="hljs-keyword">return</span> msg.type === <span class="hljs-string">'two'</span>;
+  }
+}
+
+
+<span class="hljs-keyword">var</span> handler = <span class="hljs-keyword">new</span> Handler();
+<span class="hljs-keyword">var</span> spy = <span class="hljs-keyword">new</span> MessageSpy();
+<span class="hljs-keyword">var</span> filter = <span class="hljs-keyword">new</span> FilterTwo();
+
+sendMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'two'</span>));  <span class="hljs-comment">// logs 'two'</span>
+
+installMessageFilter(handler, spy);
+
+sendMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'two'</span>));  <span class="hljs-comment">// logs 'spy: two', then 'two'</span>
+
+installMessageFilter(handler, filter);
+
+sendMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'two'</span>));  <span class="hljs-comment">// logs nothing</span>
+
+installMessageFilter(handler, spy);
+
+sendMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'two'</span>));  <span class="hljs-comment">// logs 'spy: two'</span>
+
+removeMessageFilter(handler, filter);
+
+sendMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'two'</span>));  <span class="hljs-comment">// logs 'spy: two', 'spy: two', then 'two'</span>
+
+removeMessageFilter(handler, spy);
+
+sendMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'two'</span>));  <span class="hljs-comment">// logs 'two'</span>
+</code></pre>
+				<p><strong>Clear all message data associated with a handler:</strong></p>
+				<pre><code><span class="hljs-keyword">import</span> { clearMessageData } <span class="hljs-keyword">from</span> <span class="hljs-string">'phosphor-messaging'</span>;
+
+
+<span class="hljs-comment">// clear everything - posted messages *and* filters</span>
+clearMessageData(handler);
 </code></pre>
 			</div>
 		</div>
