@@ -175,6 +175,37 @@ postMessage(handler, <span class="hljs-keyword">new</span> ValueMessage(<span cl
 
 <span class="hljs-comment">// sometime later: logs 'two' then 43</span>
 </code></pre>
+				<p><strong>Posted messages can be compressed to reduce duplicate work:</strong></p>
+				<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> { Queue } from <span class="hljs-string">'phosphor-queue'</span>;
+
+
+<span class="hljs-keyword">class</span> ExpensiveWorker extends Handler {
+
+  processMessage(msg: Message): <span class="hljs-built_in">void</span> {
+    <span class="hljs-keyword">if</span> (msg.type === <span class="hljs-string">'expensive'</span>) {
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'do something expensive'</span>);
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-keyword">super</span>.processMessage(msg);
+    }
+  }
+
+  compressMessage(msg: Message, pending: Queue&lt;Message&gt;): <span class="hljs-built_in">boolean</span> {
+    <span class="hljs-keyword">if</span> (msg.type === <span class="hljs-string">'expensive'</span>) {
+       <span class="hljs-keyword">return</span> pending.some(other =&gt; other.type === <span class="hljs-string">'expensive'</span>);
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+  }
+}
+
+
+<span class="hljs-keyword">var</span> handler = <span class="hljs-keyword">new</span> ExpensiveWorker();
+postMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'expensive'</span>));
+postMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'expensive'</span>));
+postMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'expensive'</span>));
+postMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'expensive'</span>));
+
+<span class="hljs-comment">// sometime later: logs 'do something expensive' only once</span>
+</code></pre>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
