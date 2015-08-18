@@ -114,12 +114,10 @@ npm run build
 				<p>The <code>sendMessage</code> function delivers the messages synchronously, for
 				immediate processing by the message handler.</p>
 				<pre><code class="lang-typescript"><span class="hljs-comment">// Omit the `IMessageHandler` import on Node/Babel/ES6/ES5</span>
-<span class="hljs-keyword">import</span> { IMessageHandler, sendMessage } from <span class="hljs-string">'phosphor-messaging'</span>;
+<span class="hljs-keyword">import</span> { IMessageHandler, Message, sendMessage } from <span class="hljs-string">'phosphor-messaging'</span>;
 
 <span class="hljs-keyword">class</span> Handler <span class="hljs-keyword">implements</span> IMessageHandler {
-  <span class="hljs-comment">/**
-   * Process a message delivered to the handler.
-   */</span>
+
   processMessage(msg: Message): <span class="hljs-built_in">void</span> {
     <span class="hljs-built_in">console</span>.log(msg.type);
   }
@@ -132,14 +130,50 @@ sendMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="
 </code></pre>
 				<p><strong>It&#39;s also possible to post a message for future processing:</strong></p>
 				<p>The <code>postMessage</code> function delivers the messages asynchronously, for
-				processing by the message handler on the next event loop cycle.</p>
+				processing by the message handler on the next cycle of the event loop.</p>
 				<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> { postMessage } from <span class="hljs-string">'phosphor-messaging'</span>;
 
 postMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'one'</span>));
 postMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'two'</span>));
 postMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'three'</span>));
 
-<span class="hljs-comment">// later, logs 'one', 'two', then 'three'.</span>
+<span class="hljs-comment">// sometime later: logs 'one', 'two', then 'three'.</span>
+</code></pre>
+				<p><strong>Custom messages can be defined with extra data:</strong></p>
+				<pre><code class="lang-typescript"><span class="hljs-keyword">class</span> ValueMessage extends Message {
+
+  <span class="hljs-constructor"><span class="hljs-keyword">constructor</span>(value: number) </span>{
+    <span class="hljs-keyword">super</span>(<span class="hljs-string">'value'</span>);
+    <span class="hljs-keyword">this</span>._value = value;
+  }
+
+  <span class="hljs-keyword">get</span> value(): <span class="hljs-built_in">number</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._value;
+  }
+
+  <span class="hljs-keyword">private</span> _value: <span class="hljs-built_in">number</span>;
+}
+
+
+<span class="hljs-keyword">class</span> ValueHandler extends Handler {
+
+  processMessage(msg: Message): <span class="hljs-built_in">void</span> {
+    <span class="hljs-keyword">if</span> (msg.type === <span class="hljs-string">'value'</span>) {
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'value: '</span>, (&lt;ValueMessage&gt;msg).value);
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-keyword">super</span>.processMessage(msg);
+    }
+  }
+}
+
+
+<span class="hljs-keyword">var</span> handler = <span class="hljs-keyword">new</span> ValueHandler();
+sendMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'one'</span>));    <span class="hljs-comment">// logs 'one'</span>
+postMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'two'</span>));
+sendMessage(handler, <span class="hljs-keyword">new</span> ValueMessage(<span class="hljs-number">42</span>));  <span class="hljs-comment">// logs 42</span>
+postMessage(handler, <span class="hljs-keyword">new</span> ValueMessage(<span class="hljs-number">43</span>));
+
+<span class="hljs-comment">// sometime later: logs 'two' then 43</span>
 </code></pre>
 			</div>
 		</div>
