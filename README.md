@@ -179,10 +179,30 @@ class ExpensiveWorker extends Handler {
 
 
 var handler = new ExpensiveWorker();
+postMessage(handler, new Message('one'));
+postMessage(handler, new Message('expensive'));
+postMessage(handler, new Message('two'));
 postMessage(handler, new Message('expensive'));
 postMessage(handler, new Message('expensive'));
-postMessage(handler, new Message('expensive'));
+postMessage(handler, new Message('three'));
 postMessage(handler, new Message('expensive'));
 
-// sometime later: logs 'do something expensive' only once
+// sometime later: logs 'one', 'do something expensive', 'two', then 'three'
+```
+
+**It's possible to test for and preemptively deliver posted messages:**
+
+```typescript
+import { hasPendingMessages, sendPendingMessage } from 'phosphor-messaging';
+
+postMessage(handler, new Message('one'));
+postMessage(handler, new Message('two'));
+postMessage(handler, new Message('three'));
+
+hasPendingMessages(handler);  // true
+
+sendPendingMessage(handler);  // logs 'one'
+sendPendingMessage(handler);  // logs 'two'
+
+// sometime later: logs 'three'.
 ```
