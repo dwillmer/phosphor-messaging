@@ -32,9 +32,9 @@ class CompressHandler extends Handler {
 
   compressTypes: string[] = [];
 
-  compressMessage(msg: Message, queue: Queue<Message>): boolean {
+  compressMessage(msg: Message, pending: Queue<Message>): boolean {
     if (this.compressTypes.indexOf(msg.type) !== -1) {
-      return queue.some(other => other.type === msg.type);
+      return pending.some(other => other.type === msg.type);
     }
     return false;
   }
