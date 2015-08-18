@@ -77,14 +77,14 @@ Usage Examples
 **Note:** This module is fully compatible with Node/Babel/ES6/ES5. Simply
 omit the type declarations when using a language other than TypeScript.
 
-**The simplest case is sending a message to a message handler:**
+**Send a message to a message handler for immediate processing:**
 
 The `sendMessage` function delivers the messages synchronously, for
 immediate processing by the message handler.
 
 ```typescript
-// Omit the `IMessageHandler` import on Node/Babel/ES6/ES5
 import { IMessageHandler, Message, sendMessage } from 'phosphor-messaging';
+
 
 class Handler implements IMessageHandler {
 
@@ -99,13 +99,14 @@ sendMessage(handler, new Message('two'));	 // logs 'two'
 sendMessage(handler, new Message('three'));  // logs 'three'
 ```
 
-**It's also possible to post a message for future processing:**
+**Post a message to a message handler for future processing:**
 
 The `postMessage` function delivers the messages asynchronously, for
 processing by the message handler on the next cycle of the event loop.
 
 ```typescript
 import { postMessage } from 'phosphor-messaging';
+
 
 postMessage(handler, new Message('one'));
 postMessage(handler, new Message('two'));
@@ -114,7 +115,7 @@ postMessage(handler, new Message('three'));
 // sometime later: logs 'one', 'two', then 'three'.
 ```
 
-**Custom messages can be defined with extra data:**
+**Create custom messages which hold extra data:**
 
 ```typescript
 class ValueMessage extends Message {
@@ -153,7 +154,7 @@ postMessage(handler, new ValueMessage(43));
 // sometime later: logs 'two' then 43
 ```
 
-**Posted messages can be compressed to reduce duplicate work:**
+**Compress posted messages to reduce duplicate work:**
 
 ```typescript
 import { Queue } from 'phosphor-queue';
@@ -190,10 +191,11 @@ postMessage(handler, new Message('expensive'));
 // sometime later: logs 'one', 'do something expensive', 'two', then 'three'
 ```
 
-**It's possible to test for and preemptively deliver posted messages:**
+**Test for, and preemptively deliver, posted messages:**
 
 ```typescript
 import { hasPendingMessages, sendPendingMessage } from 'phosphor-messaging';
+
 
 postMessage(handler, new Message('one'));
 postMessage(handler, new Message('two'));
@@ -205,4 +207,66 @@ sendPendingMessage(handler);  // logs 'one'
 sendPendingMessage(handler);  // logs 'two'
 
 // sometime later: logs 'three'.
+```
+
+**Install message filters to spy on or restrict message processing:**
+
+```typescript
+import {
+  IMessageFilter, installMessageFilter, removeMessageFilter
+} from 'phosphor-messaging';
+
+
+class MessageSpy implements IMessageFilter {
+
+  filterMessage(handler: IMessageHandler, msg: Message): boolean {
+  	console.log('spy:', msg.type);
+  	return false;
+  }
+}
+
+
+class FilterTwo implements IMessageFilter {
+
+  filterMessage(handler: IMessageHandler, msg: Message): boolean {
+  	return msg.type === 'two';
+  }
+}
+
+
+var handler = new Handler();
+var spy = new MessageSpy();
+var filter = new FilterTwo();
+
+sendMessage(handler, new Message('two'));  // logs 'two'
+
+installMessageFilter(handler, spy);
+
+sendMessage(handler, new Message('two'));  // logs 'spy: two', then 'two'
+
+installMessageFilter(handler, filter);
+
+sendMessage(handler, new Message('two'));  // logs nothing
+
+installMessageFilter(handler, spy);
+
+sendMessage(handler, new Message('two'));  // logs 'spy: two'
+
+removeMessageFilter(handler, filter);
+
+sendMessage(handler, new Message('two'));  // logs 'spy: two', 'spy: two', then 'two'
+
+removeMessageFilter(handler, spy);
+
+sendMessage(handler, new Message('two'));  // logs 'two'
+```
+
+**Clear all message data associated with a handler:**
+
+```
+import { clearMessageData } from 'phosphor-messaging';
+
+
+// clear everything - posted messages *and* filters
+clearMessageData(handler);
 ```
