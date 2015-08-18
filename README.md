@@ -84,12 +84,10 @@ immediate processing by the message handler.
 
 ```typescript
 // Omit the `IMessageHandler` import on Node/Babel/ES6/ES5
-import { IMessageHandler, sendMessage } from 'phosphor-messaging';
+import { IMessageHandler, Message, sendMessage } from 'phosphor-messaging';
 
 class Handler implements IMessageHandler {
-  /**
-   * Process a message delivered to the handler.
-   */
+
   processMessage(msg: Message): void {
     console.log(msg.type);
   }
@@ -104,7 +102,7 @@ sendMessage(handler, new Message('three'));  // logs 'three'
 **It's also possible to post a message for future processing:**
 
 The `postMessage` function delivers the messages asynchronously, for
-processing by the message handler on the next event loop cycle.
+processing by the message handler on the next cycle of the event loop.
 
 ```typescript
 import { postMessage } from 'phosphor-messaging';
@@ -113,5 +111,44 @@ postMessage(handler, new Message('one'));
 postMessage(handler, new Message('two'));
 postMessage(handler, new Message('three'));
 
-// later, logs 'one', 'two', then 'three'.
+// sometime later: logs 'one', 'two', then 'three'.
+```
+
+**Custom messages can be defined with extra data:**
+
+```typescript
+class ValueMessage extends Message {
+
+  constructor(value: number) {
+    super('value');
+    this._value = value;
+  }
+
+  get value(): number {
+    return this._value;
+  }
+
+  private _value: number;
+}
+
+
+class ValueHandler extends Handler {
+
+  processMessage(msg: Message): void {
+    if (msg.type === 'value') {
+      console.log('value: ', (<ValueMessage>msg).value);
+    } else {
+      super.processMessage(msg);
+    }
+  }
+}
+
+
+var handler = new ValueHandler();
+sendMessage(handler, new Message('one'));    // logs 'one'
+postMessage(handler, new Message('two'));
+sendMessage(handler, new ValueMessage(42));  // logs 42
+postMessage(handler, new ValueMessage(43));
+
+// sometime later: logs 'two' then 43
 ```
