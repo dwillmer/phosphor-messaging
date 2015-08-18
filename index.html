@@ -275,7 +275,7 @@ removeMessageFilter(handler, spy);
 sendMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'two'</span>));  <span class="hljs-comment">// logs 'two'</span>
 </code></pre>
 				<p><strong>Clear all message data associated with a handler:</strong></p>
-				<pre><code><span class="hljs-keyword">import</span> { clearMessageData } <span class="hljs-keyword">from</span> <span class="hljs-string">'phosphor-messaging'</span>;
+				<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> { clearMessageData } from <span class="hljs-string">'phosphor-messaging'</span>;
 
 
 <span class="hljs-comment">// clear everything - posted messages *and* filters</span>
