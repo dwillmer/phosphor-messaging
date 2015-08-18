@@ -259,13 +259,18 @@ var dispatchQueue = new Queue<IMessageHandler>();
 /**
  * The internal animation frame id for the message loop wake up call.
  */
-var frameId = 0;
+var frameId: any = void 0;
 
 
 /**
- * A local reference to `requestAnimationFrame`.
+ * A local reference to an event loop hook.
  */
-var raf = requestAnimationFrame;
+var raf: (cb: () => void) => any;
+if (typeof requestAnimationFrame === 'function') {
+  raf = requestAnimationFrame;
+} else {
+  raf = setImmediate;
+}
 
 
 /**
@@ -286,7 +291,7 @@ function getDispatcher(handler: IMessageHandler): MessageDispatcher {
  * This is a no-op if a wake up is not needed or is already pending.
  */
 function wakeUpMessageLoop(): void {
-  if (frameId === 0 && !dispatchQueue.empty) {
+  if (frameId === void 0 && !dispatchQueue.empty) {
     frameId = raf(runMessageLoop);
   }
 }
@@ -301,7 +306,7 @@ function wakeUpMessageLoop(): void {
  */
 function runMessageLoop(): void {
   // Clear the frame id so the next wake up call can be scheduled.
-  frameId = 0;
+  frameId = void 0;
 
   // If the queue is empty, there is nothing else to do.
   if (dispatchQueue.empty) {
