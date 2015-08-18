@@ -199,12 +199,29 @@ postMessage(handler, <span class="hljs-keyword">new</span> ValueMessage(<span cl
 
 
 <span class="hljs-keyword">var</span> handler = <span class="hljs-keyword">new</span> ExpensiveWorker();
+postMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'one'</span>));
+postMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'expensive'</span>));
+postMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'two'</span>));
 postMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'expensive'</span>));
 postMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'expensive'</span>));
-postMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'expensive'</span>));
+postMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'three'</span>));
 postMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'expensive'</span>));
 
-<span class="hljs-comment">// sometime later: logs 'do something expensive' only once</span>
+<span class="hljs-comment">// sometime later: logs 'one', 'do something expensive', 'two', then 'three'</span>
+</code></pre>
+				<p><strong>It&#39;s possible to test for and preemptively deliver posted messages:</strong></p>
+				<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> { hasPendingMessages, sendPendingMessage } from <span class="hljs-string">'phosphor-messaging'</span>;
+
+postMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'one'</span>));
+postMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'two'</span>));
+postMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'three'</span>));
+
+hasPendingMessages(handler);  <span class="hljs-comment">// true</span>
+
+sendPendingMessage(handler);  <span class="hljs-comment">// logs 'one'</span>
+sendPendingMessage(handler);  <span class="hljs-comment">// logs 'two'</span>
+
+<span class="hljs-comment">// sometime later: logs 'three'.</span>
 </code></pre>
 			</div>
 		</div>
