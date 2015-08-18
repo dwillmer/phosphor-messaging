@@ -108,7 +108,39 @@ npm run build
 					<li>Chrome 38+</li>
 				</ul>
 				<h2 id="usage-examples">Usage Examples</h2>
-				<p>TODO</p>
+				<p><strong>Note:</strong> This module is fully compatible with Node/Babel/ES6/ES5. Simply
+				omit the type declarations when using a language other than TypeScript.</p>
+				<p><strong>The simplest case is sending a message to a message handler:</strong></p>
+				<p>The <code>sendMessage</code> function delivers the messages synchronously, for
+				immediate processing by the message handler.</p>
+				<pre><code class="lang-typescript"><span class="hljs-comment">// Omit the `IMessageHandler` import on Node/Babel/ES6/ES5</span>
+<span class="hljs-keyword">import</span> { IMessageHandler, sendMessage } from <span class="hljs-string">'phosphor-messaging'</span>;
+
+<span class="hljs-keyword">class</span> Handler <span class="hljs-keyword">implements</span> IMessageHandler {
+  <span class="hljs-comment">/**
+   * Process a message delivered to the handler.
+   */</span>
+  processMessage(msg: Message): <span class="hljs-built_in">void</span> {
+    <span class="hljs-built_in">console</span>.log(msg.type);
+  }
+}
+
+<span class="hljs-keyword">var</span> handler = <span class="hljs-keyword">new</span> Handler();
+sendMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'one'</span>));    <span class="hljs-comment">// logs 'one'</span>
+sendMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'two'</span>));     <span class="hljs-comment">// logs 'two'</span>
+sendMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'three'</span>));  <span class="hljs-comment">// logs 'three'</span>
+</code></pre>
+				<p><strong>It&#39;s also possible to post a message for future processing:</strong></p>
+				<p>The <code>postMessage</code> function delivers the messages asynchronously, for
+				processing by the message handler on the next event loop cycle.</p>
+				<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> { postMessage } from <span class="hljs-string">'phosphor-messaging'</span>;
+
+postMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'one'</span>));
+postMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'two'</span>));
+postMessage(handler, <span class="hljs-keyword">new</span> Message(<span class="hljs-string">'three'</span>));
+
+<span class="hljs-comment">// later, logs 'one', 'two', then 'three'.</span>
+</code></pre>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
