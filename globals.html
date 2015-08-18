@@ -108,7 +108,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/phosphorjs/phosphor-messaging/blob/HEAD/src/index.ts#L240">index.ts:240</a></li>
+									<li>Defined in <a href="https://github.com/phosphorjs/phosphor-messaging/blob/HEAD/src/index.ts#L239">index.ts:239</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -175,17 +175,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/phosphorjs/phosphor-messaging/blob/HEAD/src/index.ts#L205">index.ts:205</a></li>
+									<li>Defined in <a href="https://github.com/phosphorjs/phosphor-messaging/blob/HEAD/src/index.ts#L204">index.ts:204</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Install a message filter for a message handler.</p>
 								</div>
-								<p>A message filter is invoked before the message handler processes
-									a message. If the filter returns true from its <code>filterMessage</code>
-									method, no other filters will be invoked, and the message will
-								not be delivered to the handler.</p>
+								<p>A message filter is invoked before the message handler processes a
+									message. If the filter returns <code>true</code> from its <a href="interfaces/imessagefilter.html#filtermessage">filterMessage</a> method,
+								no other filters will be invoked, and the message will not be delivered.</p>
 								<p>The most recently installed message filter is executed first.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -202,7 +201,7 @@
 										<p>The filter to install for the handler.</p>
 										<h4 id="notes">Notes</h4>
 										<p>It is possible to install the same filter multiple times. If the
-										filter should be unique, call <code>removeMessageFilter</code> first.</p>
+										filter should be unique, call <a href="globals.html#removemessagefilter">removeMessageFilter</a> first.</p>
 										<p><strong>See Also</strong> <a href="globals.html#removemessagefilter">removeMessageFilter</a>.</p>
 									</div>
 								</li>
@@ -242,7 +241,7 @@
 									<div class="tsd-comment tsd-typography">
 										<p>The message to post to the handler.</p>
 										<h4 id="notes">Notes</h4>
-										<p>Unlike <code>sendMessage</code>, <code>postMessage</code> will schedule the deliver of
+										<p>Unlike <a href="globals.html#sendmessage">sendMessage</a>, <a href="globals.html#postmessage">postMessage</a> will schedule the deliver of
 											the message for the next cycle of the event loop. The handler will
 											have the opportunity to compress the message in order to optimize
 											its handling of similar messages. The message will be sent through
@@ -265,7 +264,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/phosphorjs/phosphor-messaging/blob/HEAD/src/index.ts#L226">index.ts:226</a></li>
+									<li>Defined in <a href="https://github.com/phosphorjs/phosphor-messaging/blob/HEAD/src/index.ts#L225">index.ts:225</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -328,10 +327,10 @@
 									<div class="tsd-comment tsd-typography">
 										<p>The message to send to the handler.</p>
 										<h4 id="notes">Notes</h4>
-										<p>Unlike <code>postMessage</code>, <code>sendMessage</code> delivers the message to the
-											handler immediately. The handler will not have the opportunity
-											to compress the message, however the message will still be
-										sent through any installed message filters.</p>
+										<p>Unlike <a href="globals.html#postmessage">postMessage</a>, <a href="globals.html#sendmessage">sendMessage</a> delivers the message to
+											the handler immediately. The handler will not have the opportunity
+											to compress the message, however the message will still be sent
+										through any installed message filters.</p>
 										<p><strong>See Also</strong> <a href="globals.html#postmessage">postMessage</a>.</p>
 									</div>
 								</li>
