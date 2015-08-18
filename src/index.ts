@@ -114,10 +114,10 @@ interface IMessageFilter {
  * @param msg - The message to send to the handler.
  *
  * #### Notes
- * Unlike `postMessage`, `sendMessage` delivers the message to the
- * handler immediately. The handler will not have the opportunity
- * to compress the message, however the message will still be
- * sent through any installed message filters.
+ * Unlike [[postMessage]], [[sendMessage]] delivers the message to
+ * the handler immediately. The handler will not have the opportunity
+ * to compress the message, however the message will still be sent
+ * through any installed message filters.
  *
  * **See Also** [[postMessage]].
  */
@@ -135,7 +135,7 @@ function sendMessage(handler: IMessageHandler, msg: Message): void {
  * @param msg - The message to post to the handler.
  *
  * #### Notes
- * Unlike `sendMessage`, `postMessage` will schedule the deliver of
+ * Unlike [[sendMessage]], [[postMessage]] will schedule the deliver of
  * the message for the next cycle of the event loop. The handler will
  * have the opportunity to compress the message in order to optimize
  * its handling of similar messages. The message will be sent through
@@ -184,10 +184,9 @@ function sendPendingMessage(handler: IMessageHandler): void {
 /**
  * Install a message filter for a message handler.
  *
- * A message filter is invoked before the message handler processes
- * a message. If the filter returns true from its `filterMessage`
- * method, no other filters will be invoked, and the message will
- * not be delivered to the handler.
+ * A message filter is invoked before the message handler processes a
+ * message. If the filter returns `true` from its [[filterMessage]] method,
+ * no other filters will be invoked, and the message will not be delivered.
  *
  * The most recently installed message filter is executed first.
  *
@@ -197,7 +196,7 @@ function sendPendingMessage(handler: IMessageHandler): void {
  *
  * #### Notes
  * It is possible to install the same filter multiple times. If the
- * filter should be unique, call `removeMessageFilter` first.
+ * filter should be unique, call [[removeMessageFilter]] first.
  *
  * **See Also** [[removeMessageFilter]].
  */
