@@ -152,3 +152,37 @@ postMessage(handler, new ValueMessage(43));
 
 // sometime later: logs 'two' then 43
 ```
+
+**Posted messages can be compressed to reduce duplicate work:**
+
+```typescript
+import { Queue } from 'phosphor-queue';
+
+
+class ExpensiveWorker extends Handler {
+
+  processMessage(msg: Message): void {
+    if (msg.type === 'expensive') {
+      console.log('do something expensive');
+    } else {
+      super.processMessage(msg);
+    }
+  }
+
+  compressMessage(msg: Message, pending: Queue<Message>): boolean {
+    if (msg.type === 'expensive') {
+       return pending.some(other => other.type === 'expensive');
+    }
+    return false;
+  }
+}
+
+
+var handler = new ExpensiveWorker();
+postMessage(handler, new Message('expensive'));
+postMessage(handler, new Message('expensive'));
+postMessage(handler, new Message('expensive'));
+postMessage(handler, new Message('expensive'));
+
+// sometime later: logs 'do something expensive' only once
+```
