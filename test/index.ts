@@ -213,7 +213,7 @@ describe('phosphor-messaging', () => {
 
   });
 
-  describe('sendMessage', () => {
+  describe('sendMessage()', () => {
 
     it('should send a message to the handler to process immediately', () => {
       var handler = new Handler();
@@ -271,7 +271,7 @@ describe('phosphor-messaging', () => {
 
   });
 
-  describe('postMessage', () => {
+  describe('postMessage()', () => {
 
     it('should post a message to the handler in the future', (done) => {
       var handler = new Handler();
@@ -328,7 +328,7 @@ describe('phosphor-messaging', () => {
 
   });
 
-  describe('hasPendingMessages', () => {
+  describe('hasPendingMessages()', () => {
 
     it('should indicate if a handler has pending posted messages', (done) => {
       var handler1 = new Handler();
@@ -352,7 +352,7 @@ describe('phosphor-messaging', () => {
 
   });
 
-  describe('sendPendingMessage', () => {
+  describe('sendPendingMessage()', () => {
 
     it('should send the first pending posted message to a handler', (done) => {
       var handler = new Handler();
@@ -380,7 +380,7 @@ describe('phosphor-messaging', () => {
 
   });
 
-  describe('installMessageFilter', () => {
+  describe('installMessageFilter()', () => {
 
     it('should install a filter for a handler', () => {
       var handler = new Handler();
@@ -426,7 +426,7 @@ describe('phosphor-messaging', () => {
 
   });
 
-  describe('removeMessageFilter', () => {
+  describe('removeMessageFilter()', () => {
 
     it('should remove a previously installed filter', () => {
       var handler = new Handler();
@@ -497,7 +497,7 @@ describe('phosphor-messaging', () => {
 
   });
 
-  describe('clearMessageData', () => {
+  describe('clearMessageData()', () => {
 
     it('should remove all message data associated with a handler', (done) => {
       var handler = new Handler();
