@@ -263,7 +263,7 @@ sendMessage(handler, new Message('two'));  // logs 'two'
 
 **Clear all message data associated with a handler:**
 
-```
+```typescript
 import { clearMessageData } from 'phosphor-messaging';
 
 
