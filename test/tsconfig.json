@@ -10,6 +10,6 @@
     "../typings/expect.js/expect.js.d.ts",
     "../typings/mocha/mocha.d.ts",
     "../node_modules/phosphor-queue/lib/phosphor-queue.d.ts",
-    "index.ts"
+    "testmessaging.ts"
   ]
 }
