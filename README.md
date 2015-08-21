@@ -3,7 +3,7 @@ phosphor-messaging
 
 A module for inter-object message passing.
 
-[API Docs](http://phosphorjs.github.io/phosphor-messaging/)
+[API Docs](http://phosphorjs.github.io/phosphor-messaging/api/)
 
 
 Package Install
