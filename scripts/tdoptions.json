@@ -3,7 +3,7 @@
   "target": "ES5",
   "excludeNotExported": true,
   "mode": "file",
-  "out": "docs",
+  "out": "docs/api",
   "src": [
     "typings/es6-collections/es6-collections.d.ts",
     "node_modules/phosphor-queue/lib/phosphor-queue.d.ts",
