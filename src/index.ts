@@ -7,7 +7,9 @@
 |----------------------------------------------------------------------------*/
 'use strict';
 
-import { Queue } from 'phosphor-queue';
+import {
+  Queue
+} from 'phosphor-queue';
 
 
 /**

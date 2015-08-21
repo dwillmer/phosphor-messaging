@@ -9,7 +9,9 @@
 
 import expect = require('expect.js');
 
-import { Queue } from 'phosphor-queue';
+import {
+  Queue
+} from 'phosphor-queue';
 
 import {
   IMessageFilter, IMessageHandler, Message, clearMessageData,
