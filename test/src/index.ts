@@ -93,7 +93,7 @@ describe('phosphor-messaging', () => {
 
   describe('Message', () => {
 
-    describe('constructor', () => {
+    describe('#constructor()', () => {
 
       it('should require a single message type argument', () => {
         var msg = new Message('test');
