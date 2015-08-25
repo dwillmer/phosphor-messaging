@@ -4,4 +4,4 @@
 docs/api
 lib
 node_modules
-test/*.js
+test/build

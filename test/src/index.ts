@@ -17,7 +17,7 @@ import {
   IMessageFilter, IMessageHandler, Message, clearMessageData,
   hasPendingMessages, installMessageFilter, postMessage, removeMessageFilter,
   sendMessage, sendPendingMessage
-} from '../lib/index';
+} from '../../lib/index';
 
 
 class Handler implements IMessageHandler {
