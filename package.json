@@ -7,7 +7,7 @@
     "definition": "lib/phosphor-messaging.d.ts"
   },
   "dependencies": {
-    "phosphor-queue": "^1.0.0"
+    "phosphor-queue": "^1.0.1"
   },
   "devDependencies": {
     "dts-generator": "^1.5.0",
