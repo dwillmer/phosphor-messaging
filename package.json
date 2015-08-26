@@ -1,6 +1,6 @@
 {
   "name": "phosphor-messaging",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A module for inter-object message passing.",
   "main": "lib/index.js",
   "typescript": {
