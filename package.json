@@ -31,6 +31,10 @@
     "type": "git",
     "url": "https://github.com/phosphorjs/phosphor-messaging.git"
   },
+  "files": [
+    "lib/index.js",
+    "lib/phosphor-messaging.d.ts"
+  ],
   "keywords": [
     "message",
     "messaging"
