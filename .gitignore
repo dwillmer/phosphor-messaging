@@ -5,3 +5,4 @@ docs/api
 lib
 node_modules
 test/build
+test/coverage

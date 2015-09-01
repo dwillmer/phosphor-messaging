@@ -1,6 +1,9 @@
 phosphor-messaging
 ==================
 
+[![Build Status](https://travis-ci.org/phosphorjs/phosphor-messaging.svg)](https://travis-ci.org/phosphorjs/phosphor-messaging?branch=master)
+[![Coverage Status](https://coveralls.io/repos/phosphorjs/phosphor-messaging/badge.svg?branch=master&service=github)](https://coveralls.io/github/phosphorjs/phosphor-messaging?branch=master)
+
 A module for inter-object message passing.
 
 [API Docs](http://phosphorjs.github.io/phosphor-messaging/api/)

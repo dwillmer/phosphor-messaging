@@ -1,12 +1,15 @@
 #!/bin/bash
+
+# submit coverage to coveralls
+cat ./test/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+
+# push docs on master branch
 if [[ $TRAVIS_PULL_REQUEST == false && $TRAVIS_BRANCH == "master" ]]
 then
-    echo "-- will build docs --"
+    echo "-- will push docs --"
 
     git config --global user.email "travis@travis-ci.com"
     git config --global user.name "Travis Bot"
-
-    npm run docs
 
     git clone https://github.com/phosphorjs/phosphor-messaging.git travis_docs_build
     cd travis_docs_build
@@ -21,5 +24,5 @@ then
     git commit -m "autocommit docs"
     git push origin gh-pages
 else
-    echo "-- will only build docs from master --"
+    echo "-- will only push docs from master --"
 fi

@@ -10,22 +10,25 @@
     "phosphor-queue": "^1.0.1"
   },
   "devDependencies": {
+    "coveralls": "^2.11.4",
     "dts-generator": "^1.5.0",
     "expect.js": "^0.3.1",
+    "istanbul": "^0.3.19",
     "mocha": "^2.2.5",
     "rimraf": "^2.4.2",
     "typedoc": "^0.3.8",
     "typescript": "^1.5.3"
   },
   "scripts": {
-    "clean": "rimraf lib && rimraf test/build",
+    "clean": "rimraf lib && rimraf test/build && rimraf test/coverage",
     "build:src": "tsc --project src",
     "build:dts": "node scripts/dtsbundle.js",
     "build:test": "tsc --project test/src",
     "build": "npm run build:src && npm run build:dts && npm run build:test",
     "docs": "rimraf docs/api && typedoc --options scripts/tdoptions.json",
     "prepublish": "npm run build",
-    "test": "mocha test/build/index.js"
+    "test": "mocha test/build/index.js",
+    "test:coverage": "istanbul cover --dir test/coverage _mocha -- test/build/index.js"
   },
   "repository": {
     "type": "git",
