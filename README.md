@@ -74,6 +74,17 @@ Earlier versions may also work, but come with no guarantees.
 - Chrome 38+
 
 
+Bundle for the Browser
+----------------------
+
+Follow the package install instructions first.
+
+```bash
+npm install --save-dev browserify browserify-css
+browserify myapp.js -t browserify-css -o mybundle.js
+```
+
+
 Usage Examples
 --------------
 
