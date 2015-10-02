@@ -1,11 +1,11 @@
 {
   "name": "phosphor-messaging",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A module for inter-object message passing.",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "dependencies": {
-    "phosphor-queue": "^1.0.2"
+    "phosphor-queue": "^1.0.4"
   },
   "devDependencies": {
     "coveralls": "^2.11.4",
@@ -13,8 +13,8 @@
     "istanbul": "^0.3.19",
     "mocha": "^2.2.5",
     "rimraf": "^2.4.2",
-    "typedoc": "git://github.com/phosphorjs/typedoc.git",
-    "typescript": "1.6.0-beta"
+    "typedoc": "^0.3.11",
+    "typescript": "^1.6.2"
   },
   "scripts": {
     "clean": "rimraf lib && rimraf test/build && rimraf test/coverage",
