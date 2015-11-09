@@ -189,7 +189,10 @@ describe('phosphor-messaging', () => {
         sendMessage(handler, new Message('three'));
         expect(handler.messages).to.eql(['one', 'two', 'three']);
         expect(filter.messages).to.eql(['one', 'two', 'three']);
-        expect(filter.handlers).to.eql([handler, handler, handler]);
+        expect(filter.handlers.length).to.be(3);
+        for (let i of [0, 1, 2]) {
+          expect(filter.handlers[i]).to.be(handler);
+        }
       });
 
       it('should filter desired messages for a handler', () => {
@@ -208,7 +211,11 @@ describe('phosphor-messaging', () => {
         expect(handler1.messages).to.eql(['three']);
         expect(handler2.messages).to.eql(['three']);
         expect(filter.messages).to.eql(['one', 'one', 'two', 'two', 'three', 'three']);
-        expect(filter.handlers).to.eql([handler1, handler2, handler1, handler2, handler1, handler2]);
+        expect(filter.handlers.length).to.be(6);
+        for (let i of [0, 2, 4]) {
+          expect(filter.handlers[i]).to.be(handler1);
+          expect(filter.handlers[i + 1]).to.be(handler2);
+        }
       });
 
     });
