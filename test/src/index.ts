@@ -73,7 +73,7 @@ class Filter implements IMessageFilter {
 class RemovingFilter extends Filter {
 
   filterMessage(handler: IMessageHandler, msg: Message): boolean {
-    var result = super.filterMessage(handler, msg);
+    let result = super.filterMessage(handler, msg);
     removeMessageFilter(handler, this);
     return result;
   }
@@ -81,7 +81,7 @@ class RemovingFilter extends Filter {
 
 
 // browser/node compatible raf
-var raf: (cb: () => void) => any;
+let raf: (cb: () => void) => any;
 if (typeof requestAnimationFrame === 'function') {
   raf = requestAnimationFrame;
 } else {
@@ -96,7 +96,7 @@ describe('phosphor-messaging', () => {
     describe('#constructor()', () => {
 
       it('should require a single message type argument', () => {
-        var msg = new Message('test');
+        let msg = new Message('test');
         expect(msg instanceof Message).to.be(true);
       });
 
@@ -105,12 +105,12 @@ describe('phosphor-messaging', () => {
     describe('#type', () => {
 
       it('should return the message type', () => {
-        var msg = new Message('test');
+        let msg = new Message('test');
         expect(msg.type).to.be('test');
       });
 
       it('should be read only', () => {
-        var msg = new Message('test');
+        let msg = new Message('test');
         expect(() => { msg.type = 'other' }).to.throwException();
       });
 
@@ -123,7 +123,7 @@ describe('phosphor-messaging', () => {
     describe('#processMessage()', () => {
 
       it('should process the messages delivered to the handler', () => {
-        var handler = new Handler();
+        let handler = new Handler();
         sendMessage(handler, new Message('one'));
         sendMessage(handler, new Message('two'));
         sendMessage(handler, new Message('three'));
@@ -135,7 +135,7 @@ describe('phosphor-messaging', () => {
     describe('#compressMessage()', () => {
 
       it('should be optional to implement', (done) => {
-        var handler = new Handler();
+        let handler = new Handler();
         postMessage(handler, new Message('one'));
         expect(handler.messages).to.eql([]);
         raf(() => {
@@ -145,7 +145,7 @@ describe('phosphor-messaging', () => {
       });
 
       it('should compress desired messages posted to the handler', (done) => {
-        var handler = new CompressHandler();
+        let handler = new CompressHandler();
         handler.compressTypes = ['one', 'three'];
         postMessage(handler, new Message('one'));
         postMessage(handler, new Message('two'));
@@ -163,7 +163,7 @@ describe('phosphor-messaging', () => {
       });
 
       it('should not be called for sent messages', () => {
-        var handler = new CompressHandler();
+        let handler = new CompressHandler();
         handler.compressTypes = ['one'];
         sendMessage(handler, new Message('one'));
         sendMessage(handler, new Message('one'));
@@ -181,8 +181,8 @@ describe('phosphor-messaging', () => {
     describe('#filterMessage()', () => {
 
       it('should be called for every message delivered to a handler', () => {
-        var handler = new Handler();
-        var filter = new Filter();
+        let handler = new Handler();
+        let filter = new Filter();
         installMessageFilter(handler, filter);
         sendMessage(handler, new Message('one'));
         sendMessage(handler, new Message('two'));
@@ -193,9 +193,9 @@ describe('phosphor-messaging', () => {
       });
 
       it('should filter desired messages for a handler', () => {
-        var handler1 = new Handler();
-        var handler2 = new Handler();
-        var filter = new Filter();
+        let handler1 = new Handler();
+        let handler2 = new Handler();
+        let filter = new Filter();
         filter.filterTypes = ['one', 'two'];
         installMessageFilter(handler1, filter);
         installMessageFilter(handler2, filter);
@@ -218,7 +218,7 @@ describe('phosphor-messaging', () => {
   describe('sendMessage()', () => {
 
     it('should send a message to the handler to process immediately', () => {
-      var handler = new Handler();
+      let handler = new Handler();
       expect(handler.messages).to.eql([]);
       sendMessage(handler, new Message('one'));
       expect(handler.messages).to.eql(['one']);
@@ -227,7 +227,7 @@ describe('phosphor-messaging', () => {
     });
 
     it('should not allow the handler to compress the message', () => {
-      var handler = new CompressHandler();
+      let handler = new CompressHandler();
       handler.compressTypes = ['one'];
       sendMessage(handler, new Message('one'));
       sendMessage(handler, new Message('one'));
@@ -236,9 +236,9 @@ describe('phosphor-messaging', () => {
     });
 
     it('should first run the message through the event filters', () => {
-      var handler = new Handler();
-      var filter1 = new Filter();
-      var filter2 = new Filter();
+      let handler = new Handler();
+      let filter1 = new Filter();
+      let filter2 = new Filter();
       filter1.filterTypes = ['one'];
       filter2.filterTypes = ['two'];
       installMessageFilter(handler, filter1);
@@ -252,10 +252,10 @@ describe('phosphor-messaging', () => {
     });
 
     it('should stop filtering on the first `true` filter result', () => {
-      var handler = new Handler();
-      var filter1 = new Filter();
-      var filter2 = new Filter();
-      var filter3 = new Filter();
+      let handler = new Handler();
+      let filter1 = new Filter();
+      let filter2 = new Filter();
+      let filter3 = new Filter();
       filter1.filterTypes = ['one'];
       filter2.filterTypes = ['one'];
       filter3.filterTypes = ['one'];
@@ -276,7 +276,7 @@ describe('phosphor-messaging', () => {
   describe('postMessage()', () => {
 
     it('should post a message to the handler in the future', (done) => {
-      var handler = new Handler();
+      let handler = new Handler();
       expect(handler.messages).to.eql([]);
       postMessage(handler, new Message('one'));
       postMessage(handler, new Message('two'));
@@ -289,7 +289,7 @@ describe('phosphor-messaging', () => {
     });
 
     it('should allow the handler to compress the message', (done) => {
-      var handler = new CompressHandler();
+      let handler = new CompressHandler();
       handler.compressTypes = ['three'];
       expect(handler.messages).to.eql([]);
       postMessage(handler, new Message('one'));
@@ -306,9 +306,9 @@ describe('phosphor-messaging', () => {
     });
 
     it('should obey global order of posted messages', (done) => {
-      var handler1 = new GlobalHandler();
-      var handler2 = new GlobalHandler();
-      var handler3 = new GlobalHandler();
+      let handler1 = new GlobalHandler();
+      let handler2 = new GlobalHandler();
+      let handler3 = new GlobalHandler();
       postMessage(handler3, new Message('one'));
       postMessage(handler1, new Message('two'));
       postMessage(handler2, new Message('three'));
@@ -333,9 +333,9 @@ describe('phosphor-messaging', () => {
   describe('hasPendingMessages()', () => {
 
     it('should indicate if a handler has pending posted messages', (done) => {
-      var handler1 = new Handler();
-      var handler2 = new Handler();
-      var handler3 = new Handler();
+      let handler1 = new Handler();
+      let handler2 = new Handler();
+      let handler3 = new Handler();
       expect(hasPendingMessages(handler1)).to.be(false);
       expect(hasPendingMessages(handler2)).to.be(false);
       expect(hasPendingMessages(handler3)).to.be(false);
@@ -357,7 +357,7 @@ describe('phosphor-messaging', () => {
   describe('sendPendingMessage()', () => {
 
     it('should send the first pending posted message to a handler', (done) => {
-      var handler = new Handler();
+      let handler = new Handler();
       expect(handler.messages).to.eql([]);
       postMessage(handler, new Message('one'));
       postMessage(handler, new Message('two'));
@@ -374,7 +374,7 @@ describe('phosphor-messaging', () => {
     });
 
     it('should be a no-op if a handler has no pending messages', () => {
-      var handler = new Handler();
+      let handler = new Handler();
       expect(handler.messages).to.eql([]);
       sendPendingMessage(handler);
       expect(handler.messages).to.eql([]);
@@ -385,8 +385,8 @@ describe('phosphor-messaging', () => {
   describe('installMessageFilter()', () => {
 
     it('should install a filter for a handler', () => {
-      var handler = new Handler();
-      var filter = new Filter();
+      let handler = new Handler();
+      let filter = new Filter();
       filter.filterTypes = ['one'];
       installMessageFilter(handler, filter);
       expect(handler.messages).to.eql([]);
@@ -395,9 +395,9 @@ describe('phosphor-messaging', () => {
     });
 
     it('should install a new filter in front of any others', () => {
-      var handler = new Handler();
-      var filter1 = new Filter();
-      var filter2 = new Filter();
+      let handler = new Handler();
+      let filter1 = new Filter();
+      let filter2 = new Filter();
       filter1.filterTypes = ['one'];
       filter2.filterTypes = ['two'];
       installMessageFilter(handler, filter1);
@@ -413,9 +413,9 @@ describe('phosphor-messaging', () => {
     });
 
     it('should allow a filter to be installed multiple times', () => {
-      var handler = new Handler();
-      var filter1 = new Filter();
-      var filter2 = new Filter();
+      let handler = new Handler();
+      let filter1 = new Filter();
+      let filter2 = new Filter();
       installMessageFilter(handler, filter1);
       installMessageFilter(handler, filter2);
       installMessageFilter(handler, filter1);
@@ -431,8 +431,8 @@ describe('phosphor-messaging', () => {
   describe('removeMessageFilter()', () => {
 
     it('should remove a previously installed filter', () => {
-      var handler = new Handler();
-      var filter = new Filter();
+      let handler = new Handler();
+      let filter = new Filter();
       filter.filterTypes = ['one'];
       sendMessage(handler, new Message('one'));
       installMessageFilter(handler, filter);
@@ -444,8 +444,8 @@ describe('phosphor-messaging', () => {
     });
 
     it('should be a no-op if the filter was not installed', () => {
-      var handler = new Handler();
-      var filter = new Filter();
+      let handler = new Handler();
+      let filter = new Filter();
       filter.filterTypes = ['one'];
       sendMessage(handler, new Message('one'));
       removeMessageFilter(handler, filter);
@@ -454,9 +454,9 @@ describe('phosphor-messaging', () => {
     });
 
     it('should remove all occurrences of a filter', () => {
-      var handler = new Handler();
-      var filter1 = new Filter();
-      var filter2 = new Filter();
+      let handler = new Handler();
+      let filter1 = new Filter();
+      let filter2 = new Filter();
       filter1.filterTypes = ['one'];
       filter2.filterTypes = ['two'];
       installMessageFilter(handler, filter1);
@@ -481,10 +481,10 @@ describe('phosphor-messaging', () => {
     });
 
     it('should be safe to remove a filter while filtering', () => {
-      var handler = new Handler();
-      var filter1 = new Filter();
-      var filter2 = new RemovingFilter();
-      var filter3 = new Filter();
+      let handler = new Handler();
+      let filter1 = new Filter();
+      let filter2 = new RemovingFilter();
+      let filter3 = new Filter();
       installMessageFilter(handler, filter1);
       installMessageFilter(handler, filter2);
       installMessageFilter(handler, filter3);
@@ -502,8 +502,8 @@ describe('phosphor-messaging', () => {
   describe('clearMessageData()', () => {
 
     it('should remove all message data associated with a handler', (done) => {
-      var handler = new Handler();
-      var filter = new Filter();
+      let handler = new Handler();
+      let filter = new Filter();
       installMessageFilter(handler, filter);
       postMessage(handler, new Message('one'));
       postMessage(handler, new Message('two'));
