@@ -13,7 +13,7 @@ import {
 
 
 /**
- * A mesage which can be sent or posted to a message handler.
+ * A message which can be sent or posted to a message handler.
  *
  * #### Notes
  * This class may be subclassed to create complex message types.
